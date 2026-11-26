@@ -5,13 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Collably - Регистрация</title>
   <link rel="stylesheet" href="style.css">
-  <script>
-  (function(){
-    var t = localStorage.getItem('collably_theme');
-    if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', t);
-  })();
-</script>
 </head>
 <body>
   <div class="auth-page">
@@ -63,6 +56,7 @@
     </div>
   </div>
 
+  <script src="common.js"></script>
   <script src="register.js"></script>
 </body>
 </html>
