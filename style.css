@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
+  /* Цвета тёмной темы (по умолчанию) */
   --bg-body: #141414;
   --bg-sidebar: #1A1A1A;
   --bg-card: #242424;
@@ -11,7 +12,11 @@
   --accent-hover: #E03E20;
   --cream: #FDF6E3;
   --cream-text: #1A1A1A;
+  --cream-muted: #555555;
   --border: #333333;
+  --danger: #e5484d;
+  --success: #4CAF50;
+
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 12px;
@@ -19,6 +24,31 @@
   --sidebar-w-collapsed: 80px;
   --nav-h: 72px;
   --transition-speed: 0.3s;
+}
+
+/* Светлая тема */
+html[data-theme="light"] {
+  --bg-body: #F5F5F3;
+  --bg-sidebar: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-hover: #EFEFED;
+  --text-main: #1A1A1A;
+  --text-muted: #6B6B6B;
+  --accent: #FF4B2B;
+  --accent-hover: #E03E20;
+  --cream: #FFE9D6;
+  --cream-text: #1A1A1A;
+  --cream-muted: #6B4A3A;
+  --border: #E2E2DF;
+  --danger: #d9363e;
+  --success: #2e9e3f;
+}
+
+/* Плавная смена цветов */
+body, .sidebar, .card, .topbar, .dropdown-menu, .form-control,
+.modal-content, .toast, .auth-card, .search input, .icon-btn,
+.project-card, .stat, .tag, .status {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
