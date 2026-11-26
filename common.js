@@ -1,4 +1,31 @@
-// common.js — общая логика для всех страниц
+// Смена темы
+document.addEventListener('DOMContentLoaded', () => {
+  const THEME_KEY = 'collably_theme';
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(THEME_KEY, theme);
+  };
+  // Сохранённая тема или системная
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  applyTheme(savedTheme || (prefersLight ? 'light' : 'dark'));
+
+  // Кнопки-переключатели
+  document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    });
+  });
+
+  // Синхронизация между вкладками
+  window.addEventListener('storage', (e) => {
+    if (e.key === THEME_KEY && e.newValue) {
+      document.documentElement.setAttribute('data-theme', e.newValue);
+    }
+  });
+
+  
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Сворачивание сайдбара
   const sidebar = document.getElementById('sidebar');
