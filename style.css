@@ -387,6 +387,15 @@ html[data-theme="light"] .tag { background: rgba(0,0,0,0.06); }
 html[data-theme="light"] .theme-toggle .icon-sun { display: block; }
 html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
+html[data-theme="light"] .dropdown-menu,
+html[data-theme="light"] .toast,
+html[data-theme="light"] .auth-card {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+html[data-theme="light"] .modal-overlay {
+  background: rgba(0,0,0,0.45);
+}
+
 @media (max-width: 1024px) {
   .projects-grid, .profile-grid { grid-template-columns: 1fr; }
   .auth-card { flex-direction: column; height: auto; }
