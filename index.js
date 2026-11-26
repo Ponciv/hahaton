@@ -1,100 +1,58 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Collably - Главная</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+// Главная: рекомендации, сохранение откликов и плавное перелистывание.
+document.addEventListener('DOMContentLoaded', () => {
+  const RESPONSE_KEY = 'collably_responses';
+  const recommendations = [
+    { id: 'frontend-react', title: 'Frontend-разработчик', meta: 'Удалённо • React', description: 'Помоги развивать интерфейс продукта и улучшать пользовательский опыт.' },
+    { id: 'ux-design', title: 'UX/UI-дизайнер', meta: 'Удалённо • Figma', description: 'Продумай удобные сценарии и создай визуальную систему проекта.' },
+    { id: 'content-manager', title: 'Контент-менеджер', meta: 'Гибкий график • Контент', description: 'Помоги команде с публикациями, текстами и развитием сообщества.' }
+  ];
+  const readResponses = () => { try { const data = JSON.parse(localStorage.getItem(RESPONSE_KEY) || '[]'); return Array.isArray(data) ? data : []; } catch { return []; } };
+  const saveResponses = data => { try { localStorage.setItem(RESPONSE_KEY, JSON.stringify(data)); return true; } catch { return false; } };
+  const card = document.getElementById('recommendationCard');
+  const title = document.getElementById('recommendationTitle');
+  const meta = document.getElementById('recommendationMeta');
+  const description = document.getElementById('recommendationDescription');
+  const button = document.getElementById('applyRecommendation');
+  const counter = document.getElementById('recommendationCounter');
+  const message = document.getElementById('recommendationEnd');
+  let responded = readResponses();
+  let index = 0;
+  const remaining = () => recommendations.map((item, i) => ({ item, i })).filter(({ item }) => !responded.includes(item.id));
+  function showNext() {
+    const available = remaining();
+    if (!available.length) {
+      if (card) card.classList.add('recommendation-finished');
+      if (title) title.textContent = 'Рекомендации закончились';
+      if (meta) meta.textContent = 'Пока больше нет доступных проектов';
+      if (description) description.textContent = 'Новые предложения появятся здесь позже.';
+      if (button) button.hidden = true;
+      if (counter) counter.textContent = `${recommendations.length} / ${recommendations.length}`;
+      if (message) message.hidden = false;
+      return;
+    }
+    const current = available[0]; index = current.i;
+    if (title) title.textContent = current.item.title;
+    if (meta) meta.textContent = current.item.meta;
+    if (description) description.textContent = current.item.description;
+    if (button) { button.hidden = false; button.disabled = false; button.textContent = 'Откликнуться'; button.dataset.projectId = current.item.id; }
+    if (counter) counter.textContent = `${recommendations.length - available.length + 1} / ${recommendations.length}`;
+    if (message) message.hidden = true;
+    card?.classList.remove('recommendation-finished');
+  }
+  button?.addEventListener('click', () => {
+    const id = button.dataset.projectId;
+    if (!id || responded.includes(id)) return;
+    const next = [...responded, id];
+    if (!saveResponses(next)) { button.textContent = 'Не удалось сохранить'; return; }
+    responded = next;
+    button.disabled = true;
+    button.textContent = 'Отклик отправлен ✓';
+    card?.classList.add('recommendation-slide-out');
+    window.setTimeout(() => { card?.classList.remove('recommendation-slide-out'); showNext(); }, 320);
+  });
+  showNext();
 
-  <aside class="sidebar" id="sidebar">
-    <div class="logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg><span>Collably</span></div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Главная</span></a></li>
-      <li><a href="projects.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg><span>Проекты</span></a></li>
-      <li><a href="profile.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Профиль</span></a></li>
-    </ul>
-    <a href="register.html" class="logout" id="logoutLink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Выйти</span></a>
-    <button class="sidebar-toggle" id="sidebarToggle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      <span>Убрать панель</span>
-    </button>
-  </aside>
-
-  <main class="main" id="main">
-    <header class="topbar">
-      <div class="search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" placeholder="Поиск проектов..." id="homeSearch">
-      </div>
-      <button class="icon-btn" aria-label="Уведомления"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
-
-      <div class="dropdown" data-dropdown>
-        <img src="https://i.pravatar.cc/150?img=5" alt="Аватар" class="avatar" data-dropdown-toggle id="topAvatar" tabindex="0" role="button">
-        <div class="dropdown-menu">
-          <a href="profile.html" class="dropdown-item">Мой профиль</a>
-          <a href="register.html" class="dropdown-item">Регистрация</a>
-          <div class="dropdown-divider"></div>
-          <a href="register.html" class="dropdown-item" style="color: var(--accent);" id="dropdownLogout">Выйти</a>
-        </div>
-      </div>
-    </header>
-
-    <div class="content">
-      <section class="banner">
-        <div class="banner-content">
-          <h1>Collably — твоя платформа <br><span>для поиска команды</span></h1>
-          <p>Создавай проекты, находи единомышленников и развивай свои идеи вместе с другими</p>
-          <a href="projects.html" class="btn btn-primary">Создать проект <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        </div>
-        <svg class="banner-decor" viewBox="0 0 200 200" fill="none">
-          <ellipse cx="100" cy="100" rx="90" ry="40" transform="rotate(-30 100 100)" stroke="var(--accent)" stroke-width="1.5"/>
-          <path d="M100 40L110 80L150 90L110 100L100 140L90 100L50 90L90 80L100 40Z" fill="var(--accent)"/>
-        </svg>
-      </section>
-
-      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
-        <section>
-          <div class="card-header">
-            <h2 class="card-title">Актуальные вакансии</h2>
-            <a href="projects.html" class="link-all">Смотреть все <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-          </div>
-          <div class="card recommendation-card" id="recommendationCard" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
-            <div style="display: flex; gap: 16px; align-items: center;">
-              <div class="project-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-              <div>
-                <h3 id="recommendationTitle" style="font-size: 16px; margin-bottom: 4px;">Frontend-разработчик</h3>
-                <p id="recommendationMeta" style="color: var(--text-muted); font-size: 13px;">Удалённо • React</p>
-                <p id="recommendationDescription" style="color: var(--text-muted); font-size: 12px; margin-top: 6px;">Помоги развивать интерфейс продукта.</p>
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 16px;">
-              <span class="recommendation-counter" id="recommendationCounter">1 / 3</span>
-              <button class="btn btn-cream btn-sm" id="applyRecommendation">Откликнуться</button>
-            </div>
-          <p id="recommendationEnd" class="recommendation-end" hidden>Вы просмотрели все предложения.</p>
-          </div>
-        </section>
-
-        <aside>
-          <div class="card-header"><h2 class="card-title" style="font-size: 20px;">Мой проект</h2></div>
-          <div class="card">
-            <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 20px;">
-              <div class="project-icon" style="background: var(--bg-body); color: var(--accent);"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg></div>
-              <div>
-                <h3 style="font-size: 15px; margin-bottom: 4px;">Мой проект</h3>
-                <p style="color: var(--text-muted); font-size: 13px;">Развиваем идею вместе</p>
-              </div>
-            </div>
-            <button class="btn btn-outline" id="openMyProject" style="width: 100%; border-color: var(--accent); color: var(--accent);">Открыть проект <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </main>
-
-  <script src="common.js"></script>
-  <script src="index.js"></script>
-</body>
-</html>
+  document.getElementById('openMyProject')?.addEventListener('click', () => { location.href = 'projects.html'; });
+  const search = document.getElementById('homeSearch');
+  search?.addEventListener('keydown', event => { if (event.key === 'Enter') { const query = search.value.trim(); location.href = `projects.html${query ? `?q=${encodeURIComponent(query)}` : ''}`; } });
+});
