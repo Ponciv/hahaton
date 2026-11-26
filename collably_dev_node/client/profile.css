@@ -1,0 +1,46 @@
+/* profile.css — дополнительные стили только для страницы профиля */
+.avatar-drop {
+  position: relative;
+  display: inline-block;
+  transition: 0.2s;
+  border-radius: 50%;
+}
+.avatar-drop.dragover {
+  outline: 3px dashed var(--accent);
+  outline-offset: 4px;
+}
+.avatar-loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-hover) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  border-radius: 8px;
+  color: transparent !important;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.modal-actions .btn { flex: 1; }
+.count-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-align: right;
+}
+.edit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 520px) {
+  .edit-grid { grid-template-columns: 1fr; }
+}
