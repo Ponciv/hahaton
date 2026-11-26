@@ -51,7 +51,7 @@
       </div>
 
       <div class="projects-grid" id="projectsGrid">
-        <div class="card project-card" data-status="active">
+        <div class="card project-card" data-owner="other" data-status="active">
           <div class="project-card-top">
             <div class="project-icon cream"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
             <div class="project-info" style="flex-grow: 1;">
@@ -59,7 +59,6 @@
                 <h3>Редизайн лендинга <span class="applications-badge" title="Подано заявок">3</span></h3>
                 <div style="display: flex; gap: 8px;">
                   <span class="status active status-badge"><span class="status-dot"></span> Активен</span>
-                  <button class="btn-archive-toggle" onclick="toggleArchive(this)">В архив</button>
                 </div>
               </div>
               <p style="margin-top: 6px;">Обновить дизайн главной страницы и улучшить конверсию.</p>
@@ -73,15 +72,14 @@
           </div>
         </div>
 
-        <div class="card project-card" data-status="archive">
+        <div class="card project-card" data-owner="other" data-status="archive">
           <div class="project-card-top">
-            <div class="project-icon cream"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+            <div class="project-icon cream"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V9M12 20V4M20 20v-9"/></svg></div>
             <div class="project-info" style="flex-grow: 1;">
               <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
                 <h3>Аналитика приложения</h3>
                 <div style="display: flex; gap: 8px;">
                   <span class="status archive status-badge"><span class="status-dot"></span> Архив</span>
-                  <button class="btn-archive-toggle" onclick="toggleArchive(this)">Восстановить</button>
                 </div>
               </div>
               <p style="margin-top: 6px;">Собрать и визуализировать ключевые метрики.</p>
@@ -95,7 +93,7 @@
           </div>
         </div>
 
-        <div class="card project-card" data-status="active">
+        <div class="card project-card" data-owner="other" data-status="active">
           <div class="project-card-top">
             <div class="project-icon cream"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
             <div class="project-info" style="flex-grow: 1;">
@@ -103,7 +101,6 @@
                 <h3>Мобильное приложение <span class="applications-badge" title="Подано заявок">5</span></h3>
                 <div style="display: flex; gap: 8px;">
                   <span class="status active status-badge"><span class="status-dot"></span> Активен</span>
-                  <button class="btn-archive-toggle" onclick="toggleArchive(this)">В архив</button>
                 </div>
               </div>
               <p style="margin-top: 6px;">Разработать MVP для iOS и Android.</p>
@@ -117,7 +114,7 @@
           </div>
         </div>
 
-        <div class="card project-card" data-status="done">
+        <div class="card project-card" data-owner="other" data-status="done">
           <div class="project-card-top">
             <div class="project-icon cream"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
             <div class="project-info" style="flex-grow: 1;">
@@ -125,7 +122,6 @@
                 <h3>Платформа для фрилансеров</h3>
                 <div style="display: flex; gap: 8px;">
                   <span class="status done status-badge"><span class="status-dot"></span> Завершён</span>
-                  <button class="btn-archive-toggle" onclick="toggleArchive(this)">В архив</button>
                 </div>
               </div>
               <p style="margin-top: 6px;">Создать платформу для поиска исполнителей.</p>
@@ -146,7 +142,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2>Создать проект</h2>
-        <button class="modal-close" onclick="closeModal('createModal')">&times;</button>
+        <button type="button" class="modal-close" aria-label="Закрыть">&times;</button>
       </div>
       <form id="createProjectForm" novalidate>
         <div class="form-group">
@@ -161,7 +157,7 @@
           <label>Иконка проекта</label>
           <div class="icon-picker" id="iconPicker">
             <div class="icon-option selected" data-icon="laptop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-            <div class="icon-option" data-icon="chart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+            <div class="icon-option" data-icon="chart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V9M12 20V4M20 20v-9"/></svg></div>
             <div class="icon-option" data-icon="phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
             <div class="icon-option" data-icon="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
             <div class="icon-option" data-icon="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg></div>
@@ -173,242 +169,7 @@
     </div>
   </div>
 
-  <script>
-  const STORAGE_KEY_PROFILE = 'collably_profile';
-  const STORAGE_KEY_PROJECTS = 'collably_projects';
-
-  const DEFAULT_PROJECTS = [
-    {
-      id: 'p1', title: 'Редизайн лендинга', desc: 'Обновить дизайн главной страницы и улучшить конверсию.',
-      icon: 'laptop', status: 'active', applications: 3, date: 'Обновлён 2 ч. назад',
-      avatars: ['https://i.pravatar.cc/150?img=1','https://i.pravatar.cc/150?img=2','https://i.pravatar.cc/150?img=3'], extra: 2
-    },
-    {
-      id: 'p2', title: 'Аналитика приложения', desc: 'Собрать и визуализировать ключевые метрики.',
-      icon: 'chart', status: 'archive', applications: 0, date: 'Обновлён 1 нед. назад',
-      avatars: ['https://i.pravatar.cc/150?img=4','https://i.pravatar.cc/150?img=5'], extra: 1
-    },
-    {
-      id: 'p3', title: 'Мобильное приложение', desc: 'Разработать MVP для iOS и Android.',
-      icon: 'phone', status: 'active', applications: 5, date: 'Обновлён 3 дня назад',
-      avatars: ['https://i.pravatar.cc/150?img=6','https://i.pravatar.cc/150?img=7','https://i.pravatar.cc/150?img=8'], extra: 0
-    },
-    {
-      id: 'p4', title: 'Платформа для фрилансеров', desc: 'Создать платформу для поиска исполнителей.',
-      icon: 'box', status: 'done', applications: 0, date: 'Завершён 12.04.2025',
-      avatars: ['https://i.pravatar.cc/150?img=9','https://i.pravatar.cc/150?img=10'], extra: 0
-    }
-  ];
-
-  const ICONS = {
-    laptop: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
-    chart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>`,
-    phone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
-    box: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
-    star: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>`
-  };
-
-  const STATUS_META = {
-    active: { label: 'Активен', cls: 'active', btn: 'В архив' },
-    archive: { label: 'Архив', cls: 'archive', btn: 'Восстановить' },
-    done: { label: 'Завершён', cls: 'done', btn: 'В архив' }
-  };
-
-  function loadProjects() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY_PROJECTS);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) return parsed;
-      }
-    } catch (e) {}
-    return JSON.parse(JSON.stringify(DEFAULT_PROJECTS));
-  }
-
-  function saveProjects(list) {
-    try { localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(list)); } catch (e) {}
-  }
-
-  function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
-  }
-
-  function renderCard(p) {
-    const meta = STATUS_META[p.status] || STATUS_META.active;
-    const avatarsHTML = (p.avatars || []).slice(0, 3).map(src => `<img src="${escapeHtml(src)}">`).join('')
-      + (p.extra > 0 ? `<span>+${p.extra}</span>` : '');
-    const appsBadge = p.status !== 'done' ? `<span class="applications-badge" title="Подано заявок">${p.applications || 0}</span>` : '';
-
-    return `
-      <div class="card project-card" data-status="${p.status}" data-id="${p.id}">
-        <div class="project-card-top">
-          <div class="project-icon cream">${ICONS[p.icon] || ICONS.laptop}</div>
-          <div class="project-info" style="flex-grow: 1;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
-              <h3>${escapeHtml(p.title)} ${appsBadge}</h3>
-              <div style="display: flex; gap: 8px;">
-                <span class="status ${meta.cls} status-badge"><span class="status-dot"></span> ${meta.label}</span>
-                <button class="btn-archive-toggle" onclick="toggleArchive(this)">${meta.btn}</button>
-              </div>
-            </div>
-            <p style="margin-top: 6px;">${escapeHtml(p.desc)}</p>
-          </div>
-        </div>
-        <div class="project-card-footer">
-          <div class="avatars">${avatarsHTML}</div>
-          <span class="project-date">${escapeHtml(p.date)}</span>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderAll() {
-    const list = loadProjects();
-    document.getElementById('projectsGrid').innerHTML = list.map(renderCard).join('');
-  }
-
-  function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-  window.closeModal = closeModal;
-
-  window.toggleArchive = function (btn) {
-    const card = btn.closest('.project-card');
-    const id = card.getAttribute('data-id');
-    const list = loadProjects();
-    const p = list.find(x => x.id === id);
-    if (!p) return;
-
-    if (p.status === 'archive') {
-      p.status = 'active';
-    } else {
-      p.status = 'archive';
-    }
-    saveProjects(list);
-    renderAll();
-  };
-
-  // Аватар из профиля
-  try {
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY_PROFILE));
-    if (data && data.avatar) document.getElementById('topAvatar').src = data.avatar;
-  } catch (e) {}
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // Сайдбар
-    const sidebar = document.getElementById('sidebar');
-    const main = document.getElementById('main');
-    const toggleBtn = document.getElementById('sidebarToggle');
-    if (toggleBtn && sidebar && main) {
-      toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        main.classList.toggle('expanded');
-      });
-    }
-
-    // Дропдаун
-    document.querySelectorAll('[data-dropdown]').forEach(dropdown => {
-      const toggle = dropdown.querySelector('[data-dropdown-toggle]');
-      if (!toggle) return;
-      toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        document.querySelectorAll('[data-dropdown].is-open').forEach(d => {
-          if (d !== dropdown) d.classList.remove('is-open');
-        });
-        dropdown.classList.toggle('is-open');
-      });
-    });
-    document.addEventListener('click', (e) => {
-      document.querySelectorAll('[data-dropdown].is-open').forEach(dropdown => {
-        if (!dropdown.contains(e.target)) dropdown.classList.remove('is-open');
-      });
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') document.querySelectorAll('[data-dropdown].is-open').forEach(d => d.classList.remove('is-open'));
-    });
-
-    // Поиск
-    const searchInput = document.getElementById('projectSearch');
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        const q = e.target.value.toLowerCase().trim();
-        document.querySelectorAll('#projectsGrid .project-card').forEach(card => {
-          card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(q));
-        });
-      });
-    }
-
-    // Модалка создания
-    const modal = document.getElementById('createModal');
-    document.getElementById('openCreateModal').addEventListener('click', () => modal.classList.add('active'));
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal('createModal'); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal('createModal'); });
-
-    let selectedIcon = 'laptop';
-    document.querySelectorAll('.icon-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        document.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
-        opt.classList.add('selected');
-        selectedIcon = opt.dataset.icon;
-      });
-    });
-
-    const createErr = document.getElementById('createError');
-    document.getElementById('createProjectForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const title = document.getElementById('projectTitle').value.trim();
-      const desc = document.getElementById('projectDesc').value.trim();
-
-      if (!title || !desc) {
-        createErr.classList.add('visible');
-        return;
-      }
-      createErr.classList.remove('visible');
-
-      const list = loadProjects();
-      const newProject = {
-        id: 'p_' + Date.now(),
-        title, desc,
-        icon: selectedIcon,
-        status: 'active',
-        applications: 0,
-        date: 'Только что',
-        avatars: ['https://i.pravatar.cc/150?img=5'],
-        extra: 0
-      };
-      list.unshift(newProject);
-      saveProjects(list);
-      renderAll();
-
-      closeModal('createModal');
-      e.target.reset();
-      document.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
-      document.querySelector('.icon-option[data-icon="laptop"]').classList.add('selected');
-      selectedIcon = 'laptop';
-    });
-
-    // Выход
-    ['logoutLink', 'dropdownLogout'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('click', (e) => {
-        e.preventDefault();
-        localStorage.removeItem('collably_user');
-        location.href = 'register.html';
-      });
-    });
-
-    // Первичный рендер
-    renderAll();
-  });
-
-  // Синхронизация между вкладками
-  window.addEventListener('storage', (e) => {
-    if (e.key === STORAGE_KEY_PROJECTS) renderAll();
-    if (e.key === STORAGE_KEY_PROFILE) {
-      try {
-        const data = JSON.parse(e.newValue);
-        if (data && data.avatar) document.getElementById('topAvatar').src = data.avatar;
-      } catch (err) {}
-    }
-  });
-</script>
+  <script src="common.js"></script>
+  <script src="projects.js"></script>
 </body>
 </html>
