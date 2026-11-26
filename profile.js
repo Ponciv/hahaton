@@ -15,6 +15,7 @@
 
   function showToast(message, type = 'success') {
     const container = document.getElementById('toastContainer');
+    if (!container) return;
     const toast = document.createElement('div');
     toast.className = 'toast ' + type;
     toast.textContent = message;
@@ -49,7 +50,9 @@
           const canvas = document.createElement('canvas');
           canvas.width = width;
           canvas.height = height;
-          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          const context = canvas.getContext('2d');
+          if (!context) return reject(new Error('Canvas недоступен'));
+          context.drawImage(img, 0, 0, width, height);
           resolve(canvas.toDataURL('image/jpeg', 0.85));
         };
         img.src = ev.target.result;
@@ -71,6 +74,21 @@
     const displayEmail = document.getElementById('displayEmail');
     const displayTelegram = document.getElementById('displayTelegram');
     const profileBanner = document.getElementById('profileBanner');
+    const profileSkinPicker = document.getElementById('profileSkinPicker');
+    const skinKey = 'collably_profile_skin';
+    const allowedSkins = ['cream', 'lavender', 'sky', 'mint', 'rose', 'sand'];
+    let savedSkin = 'cream';
+    try { savedSkin = localStorage.getItem(skinKey) || 'cream'; } catch {}
+    if (!allowedSkins.includes(savedSkin)) savedSkin = 'cream';
+    if (profileBanner) profileBanner.dataset.profileSkin = savedSkin;
+    if (profileSkinPicker) {
+      profileSkinPicker.value = savedSkin;
+      profileSkinPicker.addEventListener('change', () => {
+        const skin = allowedSkins.includes(profileSkinPicker.value) ? profileSkinPicker.value : 'cream';
+        if (profileBanner) profileBanner.dataset.profileSkin = skin;
+        try { localStorage.setItem(skinKey, skin); } catch {}
+      });
+    }
 
     const editModal = document.getElementById('editModal');
     const modalAvatar = document.getElementById('modalAvatar');
